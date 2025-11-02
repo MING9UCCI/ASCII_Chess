@@ -179,7 +179,8 @@ def _download_stockfish() -> Optional[str]:
             url = "https://github.com/official-stockfish/Stockfish/releases/download/sf_17.1/stockfish-macos-x86-64.tar.gz"
             binary_name = "stockfish-macos-x86-64"
     elif system == "linux":
-        url = "https://github.com/official-stockfish/Stockfish/releases/download/sf_17.1/stockfish-ubuntu-x86-64.tar.gz"
+        # Updated URL to use the correct Linux binary from the releases page
+        url = "https://github.com/official-stockfish/Stockfish/releases/download/sf_17.1/stockfish-ubuntu-x86-64.tar.xz"
         binary_name = "stockfish-ubuntu-x86-64"
     else:
         return None
@@ -212,22 +213,21 @@ def _download_stockfish() -> Optional[str]:
         print("\n압축 해제 중...")
         if system == 'windows':
             with zipfile.ZipFile(tmp_path, 'r') as zip_ref:
-                # 압축 파일 내 파일 목록 가져오기
-                file_list = zip_ref.namelist()
-                total_files = len(file_list)
-                for i, file in enumerate(file_list, 1):
-                    zip_ref.extract(file, base_dir)
-                    print(f"\r진행률: {i}/{total_files} 파일 처리 중...", end='')
-                print()
+                zip_ref.extractall(base_dir)
         else:
             import tarfile
-            with tarfile.open(tmp_path, 'r:gz') as tar_ref:
+            # Determine the correct mode for tarfile
+            if tmp_path.endswith('.tar.xz'):
+                mode = 'r:xz'
+            else:  # .tar.gz or .tgz
+                mode = 'r:gz'
+                
+            with tarfile.open(tmp_path, mode) as tar_ref:
                 members = tar_ref.getmembers()
                 total_members = len(members)
                 for i, member in enumerate(members, 1):
                     tar_ref.extract(member, base_dir)
                     print(f"\r진행률: {i}/{total_members} 파일 처리 중...", end='')
-                print()
         
         # 압축 해제된 파일 찾기
         # Windows의 경우 압축을 풀면 stockfish/stockfish-windows-x86-64-avx2.exe 구조로 풀릴 수 있음
