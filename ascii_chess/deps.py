@@ -173,15 +173,17 @@ def _download_stockfish() -> Optional[str]:
         binary_name = "stockfish-windows-x86-64-avx2.exe"
     elif system == "darwin":  # macOS
         if "arm" in machine:
-            url = "https://github.com/official-stockfish/Stockfish/releases/download/sf_17.1/stockfish-macos-arm64.tar.gz"
-            binary_name = "stockfish-macos-arm64"
+            # Apple Silicon (M1/M2) Mac
+            url = "https://github.com/official-stockfish/Stockfish/releases/latest/download/stockfish-macos-m1-apple-silicon.tar"
+            binary_name = "stockfish"
         else:
-            url = "https://github.com/official-stockfish/Stockfish/releases/download/sf_17.1/stockfish-macos-x86-64.tar.gz"
-            binary_name = "stockfish-macos-x86-64"
+            # Intel Mac
+            url = "https://github.com/official-stockfish/Stockfish/releases/latest/download/stockfish-macos-x86-64-avx2.tar"
+            binary_name = "stockfish"
     elif system == "linux":
-        # Updated URL to use the correct Linux binary from the releases page
-        url = "https://github.com/official-stockfish/Stockfish/releases/download/sf_17.1/stockfish-ubuntu-x86-64.tar.xz"
-        binary_name = "stockfish-ubuntu-x86-64"
+        # Linux with AVX2 support
+        url = "https://github.com/official-stockfish/Stockfish/releases/latest/download/stockfish-ubuntu-x86-64-avx2.tar"
+        binary_name = "stockfish"
     else:
         return None
     
