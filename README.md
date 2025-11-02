@@ -9,9 +9,7 @@ Stockfish 엔진 기반의 봇을 상대로 플레이하는 Tkinter GUI 체스 �
 
 ## 요구 사항
 - Python 3.10 이상
-- `pip install python-chess`
 - Stockfish 엔진 실행 파일
-- `ascii_chess/fonts/menlo-regular.ttf`
 
 ## Stockfish 준비
 1. [Stockfish 공식 사이트](https://stockfishchess.org/download/)에서 운영체제에 맞는 패키지를 내려받습니다.
@@ -31,6 +29,11 @@ python main.py [옵션]
 or
 python3 main.py [옵션]
 ```
+실행 시 자동으로 아래 의존성 존재 여부 검사 및 없을 경우 설치를 진행합니다.
+- `pip install python-chess`
+- `ascii_chess/fonts/menlo-regular.ttf`
+
+릴리즈 버전의 실행에 관해서는 릴리즈 내 안내사항을 참고해주세요.
 
 ### 옵션
 - `--engine-path /path/to/stockfish` : 수동으로 엔진 경로 지정 (지정하지 않으면 `engines/stockfish/` 및 하위 항목을 자동 탐색)
